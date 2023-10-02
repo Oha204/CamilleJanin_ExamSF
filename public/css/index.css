@@ -1,0 +1,30 @@
+nav {
+    background-color: #151515;
+}
+
+.tabUser{
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.userCard{
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.formEdit {
+    margin-left: 250px;
+    margin-right: 250px;
+}
+
+.btn {
+    margin-bottom: 20px;
+    margin-top: 20px;
+    padding-left : 20px;
+    padding-right : 20px;
+}
+
+.formNew {
+    margin-left: 250px;
+    margin-right: 250px;
+}

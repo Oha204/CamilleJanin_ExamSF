@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annuaire{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+
+<div class="container">
+    <div class="text-center mt-5">
+        <h1>Hello {{ app.user.userIdentifier|upper }}! 😉</h1>
+        <p style="font-size: 25px;">Retrouvez tous vos collègues :</p>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        {% for user in users %}
+        <div class="col-md-3">
+            <div class="card mt-3 text-center" style="width: 18rem;">
+                <img class="card-img-top mx-auto mt-3" src="images/{{ user.image }}" alt="" style="width: 150px;">
+                <div class="card-body">
+                    <h5 style="font-size: 25px; font-weight: 500;" class="card-title">{{ user.firstname }} {{ user.lastname }} </h5>
+                    <div class="mb-2 mt-3">
+                        <p class="card-text mb-0">Activité : {{ user.activity.name }}</p>
+                        <p class="card-text">Contrat : {{ user.contractType.name }}</p>
+                    </div>
+                    <div class="mb-3">{% if user.contractStatus == true %}
+                            <p style="color:green; font-weight: bold;"> En cours... </p>
+                        {% else %}
+                            <p style="color:red; font-weight: bold;"> Terminé. </p>
+                        {% endif %} </div>
+                    <a href="{{ path("app_user_crud_show", { "id": user.id }) }}" class="btn btn-primary">Voir la fiche</a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+            <div class="col-12 text-center">
+                <p>Aucun utilisateur trouvé</p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}

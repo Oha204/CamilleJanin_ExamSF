@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Fiche employé - {{ user.lastname }} {{ user.firstname }}{% endblock %}
+
+{% block body %}
+<div class="userCard">  
+    <div class="mb-4 mt-5" style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>Fiche employé n°{{ user.id }}</h1>
+        
+        
+        {% if user.contractStatus == true %}
+            <p class="px-4 py-2" style="background-color:green; color:white; font-weight: bold; border-radius:20px;"> Contrat actif </p>
+        {% else %}
+            <p class="px-4 py-2" style="background-color:red; color:white; font-weight: bold; border-radius:20px;"> Contrat terminé. </p>
+        {% endif %}
+    </div>
+    
+    <img src="{{ asset('images/' ~ user.image) }}" alt="image employé" style="width: 150px; margin-bottom: 20px;">
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom complet</th>
+                <td>{{ user.lastname }} {{ user.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Secteur d'activité</th>
+                <td>{{ user.activity.name }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Mot de passe</th>
+                <td>{{ user.password }}</td>
+            </tr>
+            
+            <tr>
+                <th>Image</th>
+                <td>{{ user.image }}</td>
+            </tr>
+            
+            <tr>
+                <th>Type de contrat</th>
+                <td>{{ user.contractType.name }}</td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date fin de contrat</th>
+                <td>{{ user.contractEndDate ? user.contractEndDate|date('d-m-Y') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2" style="padding-right:15px;">
+            {% if is_granted("ROLE_ADMIN") %} 
+                <a class="btn back-button" href="{{ path('app_admin') }}"> < Retour à la liste</a>
+            {% else %}
+                <a class="btn back-button" href="{{ path('app_index') }}"> < Retour à la liste</a>
+            {% endif %}
+        </div>
+
+        {% if is_granted("ROLE_ADMIN") %} 
+            <div class="col-md-1">
+                <a class="btn btn-primary"  href="{{ path('app_user_crud_edit', {'id': user.id}) }}">Modifier</a>
+            </div>
+            <div class="col-md-1">
+                {{ include('user_crud/_delete_form.html.twig') }}
+            </div>
+        {% endif %}  
+    </div>
+</div>
+</div>
+{% endblock %}

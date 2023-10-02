@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annuaire - Admin{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row mt-4">
+        <div class="justify-content-center text-center mt-5">
+            <h1>Hello {{ app.user.userIdentifier|upper }}! 🌞</h1>
+
+            <a class="btn btn-primary mt-3" href="{{ path('app_user_crud_new') }}">Add new +</a>
+        </div>
+    </div>
+</div>
+
+<h2 class="mb-5 mt-5" style="margin-left:100px;">Liste des Employés :</h2>
+<div class="tabUser">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nom complet</th>
+                <th scope="col">Email</th>
+                <th scope="col">Secteur d'activité</th>
+                <th scope="col">Type Contrat</th>
+                <th scope="col">Statut Contrat</th>
+                <th scope="col">Date fin Contrat</th>
+                <th scope="col">Role</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</th>
+                    <td>{{ user.firstname }} {{ user.lastname }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.activity.name }}</td>
+                    <td>{{ user.contractType.name }}</td>
+                    <td>{% if user.contractStatus == true %}
+                            <p> en cours </p>
+                        {% else %}
+                            <p> terminé </p>
+                        {% endif %}
+                    </td>
+                    <td>{{ user.contractEndDate ? user.contractEndDate|date('d-m-Y') : '' }}</td>
+                    <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                    <td>
+                        <a style="margin-right:7px;" href="{{ path('app_user_crud_show', {'id': user.id}) }}">Voir</a>
+                        <a href="{{ path('app_user_crud_edit', {'id': user.id}) }}">Modifier</a> 
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6"> Aucun utilisateur trouvés</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

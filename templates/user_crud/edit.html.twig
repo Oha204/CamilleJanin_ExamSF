@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annuaire - Edit User{% endblock %}
+
+{% block body %}
+
+    <h1 class="text-center mt-5 mb-5">Modifier la fiche employé {{ user.id }}</h1>
+
+<div class="formEdit">
+    {{ include('user_crud/_form.html.twig', {'button_label': 'Update'}) }}
+<div>
+
+    <a href="{{ path('app_admin') }}">< Retour à la liste</a>
+{% endblock %}
